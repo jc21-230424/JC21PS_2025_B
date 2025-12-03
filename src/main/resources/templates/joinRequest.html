@@ -21,19 +21,19 @@
           style="color: red; font-size: 20px; font-weight: 600;">
           <p th:text="${joinRequestCompleteMessage}"></p>
         </div>
-        <div class="joinNot" th:if="${notRequestClubMessage != null}">
-          <p th:text="${notRequestClubMessage}"></p>
+        <div class="joinNot" th:if="${notRrequestClubMessage != null}">
+          <p th:text="${notRrequestClubMessage}"></p>
         </div>
-        <div class="container-in-a" th:if="${notRequestClubMessage == null}">
+        <div class="container-in-a" th:if="${notRrequestClubMessage == null}">
           <div class="wrapper">
             <div class="div-2">
               <div class="title-action-buttons">
                 <div class="header-base-wrapper">
                   <div th:if="${joinRequestSaveForm} != null">
                     <div class="header-base" th:each="joinRequestList : ${joinRequestSaveForm}">
-                      <div class="text-wrapper" th:text="*{joinRequestList.clubName}"></div>
+                      <div class="text-wrapper" th:text="${joinRequestList.clubName}"></div>
                       <div class="action-stripe-wrapper">
-                        <form th:action="@{/joinRequest/save}" th:object="${joinRequestSaveForm}" method="post">
+                        <form th:action="@{/joinRequest/save}" method="post">
                           <input type="hidden" name="clubId" th:value="${joinRequestList.clubId}" />
                           <div class="action-stripe">
                             <button class="button" type="submit">
@@ -47,7 +47,7 @@
                           </div>
                         </form>
                       </div>
-                      <div class="description" th:text="*{joinRequestList.clubDescription}"></div>
+                      <div class="description" th:text="${joinRequestList.clubDescription}"></div>
                     </div>
                   </div>
                 </div>

@@ -82,7 +82,23 @@ public class JoinRequestController {
         /*
          * TODO ➊ 初期表示情報取得結果に応じて、以下の条件文を完成させる。
          */
+        // 部が存在しない場合
+        if (joinRequestList.isEmpty()) {
+            // メッセージリソースからnotRrequestClubMessageを取得
+            String notRrequestClubMessage = messageSource.getMessage("notRrequestClubMessage", null, Locale.getDefault());
+            // 取得したメッセージをModelAndViewに追加
+            mav.addObject("notRrequestClubMessage", notRrequestClubMessage);
+            // formから取得したメッセージをModelAndViewに追加
+            mav.addObject("message", paramForm.getMessage());
+        } else {
+            // 部が存在する場合
+            // 部情報をModelAndViewに追加
+            mav.addObject("joinRequestSaveForm", responseForm);
+            // formから取得したメッセージをModelAndViewに追加
+            mav.addObject("joinRequestCompleteMessage", paramForm.getMessage());
+        }
 
+        mav.addObject("userId", form);
         mav.addObject("leaderClubId", leaderClubId);
 
         // 部員登録申請画面に遷移
@@ -115,11 +131,28 @@ public class JoinRequestController {
 
         try {
             boolean result = joinRequestService.insertJoinRequest(joinRequestSaveDto);
+
             /*
              * TODO ➋ インサートの成功、失敗に応じて、処理を変更する。
              */
+            // 登録成功時（True）
+            if (result) {
+                // メッセージリソースからjoinRequestCompleteMessageを取得
+                String joinRequestCompleteMessage = messageSource.getMessage("joinRequestCompleteMessage", null, Locale.getDefault());
+                // 取得したメッセージをformにセット
+                paramForm.setMessage(joinRequestCompleteMessage);
+                // 取得したメッセージをModelAndViewに追加
+                redirectAttributes.addFlashAttribute("joinOkMessage", joinRequestCompleteMessage);
+                // /joinRequestにリダイレクト
+                mav.setViewName("redirect:/joinRequest");
+            } else {
+                // 登録失敗時（False）
+                // エラー画面に遷移
+                mav.setViewName("error");
+            }
 
         } catch (Exception e) {
+            // DB接続に失敗した場合、エラー画面に遷移
             mav.setViewName("error");
         }
         return mav;

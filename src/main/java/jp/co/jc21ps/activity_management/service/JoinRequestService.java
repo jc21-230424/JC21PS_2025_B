@@ -50,6 +50,8 @@ public class JoinRequestService {
             JoinRequestSaveEntity joinRequestSaveEntity = new JoinRequestSaveEntity();
             joinRequestSaveEntity.setUserId(paramDto.getUserId());
             joinRequestSaveEntity.setClubId(paramDto.getClubId());
+            // 部員登録申請なのでleader_flgはfalse（0）
+            joinRequestSaveEntity.setLeaderFlg(false);
 
             joinRequestRepository.insertClub(joinRequestSaveEntity);
 

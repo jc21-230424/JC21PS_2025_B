@@ -8,6 +8,9 @@ public class JoinRequestSaveDto {
     // 部署ID
     private String clubId;
 
+    // リーダーフラグ
+    private boolean leaderFlg;
+
     // deleteフラグ
     private boolean deleteFlg;
 
@@ -29,6 +32,14 @@ public class JoinRequestSaveDto {
 
     public String getClubId() {
         return clubId;
+    }
+
+    public void setLeaderFlg(boolean leaderFlg) {
+        this.leaderFlg = leaderFlg;
+    }
+
+    public boolean isLeaderFlg() {
+        return leaderFlg;
     }
 
     public void setDeleteFlg(boolean deleteFlg) {
